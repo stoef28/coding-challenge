@@ -8,14 +8,8 @@ import java.util.*;
 public class Rechner {
 
     Map<Integer, List<PotentialAction>> potentialActionsPerYear = new HashMap<>();
-    List<PotentialAction> bestCasePerHouse = new ArrayList<>();
     public List<PotentialAction> findStrat(List<House> houses) {
         houses.forEach(this::findMaxValue);
-
-        this.bestCasePerHouse.sort(
-                Comparator.comparingInt(PotentialAction::getKaufJahr)
-                        .thenComparingDouble(PotentialAction::getGewinn));
-        System.out.println("Best cases found: " + bestCasePerHouse);
 
         List<PotentialAction> finalActions = new ArrayList<>();
         int maxYear = Collections.max(this.potentialActionsPerYear.keySet());
@@ -56,29 +50,31 @@ public class Rechner {
         System.out.println("get max for house " + house.getId());
         List<Double> werte = house.getWerte();
 
-        double max = 0.0;
-        int start = -1;
-        int end = -1;
+//        double max = 0.0;
+//        int start = -1;
+//        int end = -1;
         for(int i = 0; i< werte.size() -1; i++) {
             for(int j = i+1; j< werte.size() ; j++) {
                 double current = werte.get(j) - werte.get(i);
-                if(current > max) {
-                    max = current;
-                    start = i + house.getBaujahr();
-                    end = j + house.getBaujahr();
-                    System.out.println("House " + house.getId() + " new max found: " + max + " from " + start + " to " + end);
+                if(current > 0) {
+                    int start = i + house.getBaujahr();
+                    int end = j + house.getBaujahr();
+                    System.out.println("House " + house.getId() + " new max found: " + current + " from " + start + " to " + end);
+
+                    PotentialAction action = new PotentialAction(house.getId(), werte.get(start - house.getBaujahr()), start, end, 0, current);
+
+                    this.potentialActionsPerYear.computeIfAbsent(start, ArrayList::new);
+                    List<PotentialAction> potActions = this.potentialActionsPerYear.get(start);
+                    potActions.add(action);
+                    potActions.sort(Comparator.comparingDouble(PotentialAction::getGewinn)
+                                    .thenComparingDouble(PotentialAction::getPreis));
+                    System.out.println("potActions for year " + start + ": " + potActions);
+                    this.potentialActionsPerYear.replace(start, potActions);
                 }
             }
 
         }
-        PotentialAction action = new PotentialAction(house.getId(), werte.get(start - house.getBaujahr()), start, end, 0, max);
-        this.bestCasePerHouse.add(action);
 
-        this.potentialActionsPerYear.computeIfAbsent(start, ArrayList::new);
-        List<PotentialAction> potActions = this.potentialActionsPerYear.get(start);
-        potActions.add(action);
-        System.out.println("potActions for year " + start + ": " + potActions);
-        this.potentialActionsPerYear.replace(start, potActions);
 
     }
 }

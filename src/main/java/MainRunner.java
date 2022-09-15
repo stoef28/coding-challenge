@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class MainRunner {
 
-    static List<String> filenames = List.of("inputA.txt");
+    static List<String> filenames = List.of("inputA.txt", "inputB.txt", "inputC.txt", "inputD.txt", "inputE.txt");
 
     public static void main(String[] args) throws IOException {
 
