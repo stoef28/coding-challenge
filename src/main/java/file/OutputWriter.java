@@ -25,7 +25,7 @@ public class OutputWriter {
             write(String.valueOf(year));
             newLine();
             for (Action action: actions.get(year)){
-                if (action.getAction().equals(ActionEnum.KAUFEN)){
+                if (action.getAction().equals(ActionEnum.KAUFE)){
                     writeKaufen(action);
                 } else {
                     writeGeneralAction(action);

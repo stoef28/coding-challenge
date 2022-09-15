@@ -1,7 +1,7 @@
 package domain;
 
 public enum ActionEnum {
-    KAUFEN,
-    VERKAUFEN,
-    RENOVIEREN
+    KAUFE,
+    VERKAUFE,
+    RENOVIERE
 }

@@ -22,8 +22,8 @@ public class MainRunner {
 
             Map<Integer, List<Action>> actions = new HashMap<>();
 
-            actions.put(3, List.of(new Action(ActionEnum.KAUFEN, "baumstrasse", 3, 50)));
-            actions.put(2, List.of(new Action(ActionEnum.VERKAUFEN, "bahnhofstrasse", 3, 50)));
+            actions.put(3, List.of(new Action(ActionEnum.KAUFE, "baumstrasse", 3, 50)));
+            actions.put(2, List.of(new Action(ActionEnum.VERKAUFE, "bahnhofstrasse", 3, 50)));
 
 
             OutputWriter outputWriter = new OutputWriter();
