@@ -1,8 +1,13 @@
+import domain.Action;
+import domain.ActionEnum;
 import domain.House;
 import file.InputReader;
+import file.OutputWriter;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainRunner {
 
@@ -14,6 +19,16 @@ public class MainRunner {
             InputReader reader = new InputReader();
             List<House> read = reader.read(filename);
             System.out.println(read);
+
+            Map<Integer, List<Action>> actions = new HashMap<>();
+
+            actions.put(3, List.of(new Action(ActionEnum.KAUFEN, "baumstrasse", 3, 50)));
+            actions.put(2, List.of(new Action(ActionEnum.VERKAUFEN, "bahnhofstrasse", 3, 50)));
+
+
+            OutputWriter outputWriter = new OutputWriter();
+
+            outputWriter.writeFile(filename, actions);
         }
 
 
